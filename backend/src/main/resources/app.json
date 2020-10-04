@@ -1,0 +1,8 @@
+{
+    "apikey": "DWCW-CtMPhMiv5YIaZcRPbqu2Tq1EIJTHWVc5lfi5LQw",
+    "iam_apikey_description": "Auto-generated for key 59aea485-b25b-4c23-84b6-af50769a3fc8",
+    "iam_apikey_name": "Auto-generated service credentials",
+    "iam_role_crn": "crn:v1:bluemix:public:iam::::serviceRole:Manager",
+    "iam_serviceid_crn": "crn:v1:bluemix:public:iam-identity::a/051ff83d57a38a096206e1e0f67110ab::serviceid:ServiceId-a76f8a3a-2feb-4b59-b051-03d81ab363ae",
+    "url": "https://api.eu-gb.discovery.watson.cloud.ibm.com/instances/ffa8e344-4e36-432e-9e7f-dc7320443355"
+  }
