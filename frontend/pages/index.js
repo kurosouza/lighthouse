@@ -1,65 +1,61 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import React, { useState } from 'react';
+import { Anchor, Box, Heading, Paragraph, TextInput, Button, Form, List } from 'grommet'
+import dynamic from 'next/dynamic';
 
-export default function Home() {
+
+const HomeComponent = function Home() {
+
+  let [ searchResults, setSearchResults ] = useState([]);  
+
+  let [ searchTerm, setSearchTerm ] = useState('');
+
+  const doSearch = async (evt) => {
+    console.log('Starting search ..');
+    let encSearchTerm = encodeURI(searchTerm)
+    let res = await fetch(`http://localhost:8080/hazards?query=${encSearchTerm}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    let responseObject = await res.json();
+    // earchResults.push(...responseObject)
+    setSearchResults(responseObject)
+  };
+
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <Box align="center" margin="large" direction="column">
+      <Heading size='large' color="brand">lighthouse hazard search</Heading>
+      <Form onSubmit={ doSearch }>
+        <Box direction="row" margin="medium">
+          <TextInput size="xxlarge" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+          <Button size="large" margin="small" primary label="search" type="submit" ></Button>
+        </Box>
+      </Form>
+      <Paragraph>
+        Find out more at{' '}
+        <Anchor href="#">Lighthouse Team @ #SpaceApps2020</Anchor>
+      </Paragraph>
+    {
+      
+      searchResults.length > 0 && searchResults.map( (item, idx) => (
+        <Paragraph>{ item.text }</Paragraph>
+      ))
+      
+    }
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+{ /*
+      <List data={searchResults} children={(item, index, { active }) => 
+          <Box margin="medium"><Paragraph>{item.text}</Paragraph></Box>       
+      }>
+      </List>
+      */
+  }
+    </Box>
+  );
 }
+
+export default HomeComponent;
+
+// const toRender = dynamic(() => <HomeComponent />, { ssr: false });
+// export default () => <toRender />

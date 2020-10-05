@@ -1,7 +1,13 @@
-import '../styles/globals.css'
+import App from 'next/app'
+import { Grommet, grommet as grommetTheme } from 'grommet'
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+export default class MyApp extends App {
+  render() {
+    const { Component, pageProps } = this.props
+    return (
+      <Grommet theme={grommetTheme}>
+        <Component {...pageProps} />
+      </Grommet>
+    )
+  }
 }
-
-export default MyApp
