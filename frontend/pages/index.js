@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { Anchor, Box, Heading, Paragraph, TextInput, Button, Form, List } from 'grommet'
+import { Anchor, Box, Heading, Paragraph,Text, TextInput, Button, Form, List } from 'grommet'
 import dynamic from 'next/dynamic';
 
 
 const HomeComponent = function Home() {
 
-  let [ searchResults, setSearchResults ] = useState([]);  
+  let [searchResults, setSearchResults] = useState([]);
 
-  let [ searchTerm, setSearchTerm ] = useState('');
+  let [searchTerm, setSearchTerm] = useState('');
 
   const doSearch = async (evt) => {
     console.log('Starting search ..');
@@ -26,7 +26,7 @@ const HomeComponent = function Home() {
   return (
     <Box align="center" margin="large" direction="column">
       <Heading size='large' color="brand">lighthouse hazard search</Heading>
-      <Form onSubmit={ doSearch }>
+      <Form onSubmit={doSearch}>
         <Box direction="row" margin="medium">
           <TextInput size="xxlarge" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
           <Button size="large" margin="small" primary label="search" type="submit" ></Button>
@@ -36,21 +36,24 @@ const HomeComponent = function Home() {
         Find out more at{' '}
         <Anchor href="#">Lighthouse Team @ #SpaceApps2020</Anchor>
       </Paragraph>
-    {
-      
-      searchResults.length > 0 && searchResults.map( (item, idx) => (
-        <Paragraph>{ item.text }</Paragraph>
-      ))
-      
-    }
+      {
 
-{ /*
+        searchResults.length > 0 && searchResults.map((item, idx) => (
+          <Box border={2} margin="small" pad="small" width="medium" fill={true}>
+            <Paragraph fill={true}> <Text size="xlarge">{ item.text.slice(0,500)  }</Text></Paragraph>
+            <Anchor href="#">View All</Anchor>
+          </Box>
+        ))
+
+      }
+
+      { /*
       <List data={searchResults} children={(item, index, { active }) => 
           <Box margin="medium"><Paragraph>{item.text}</Paragraph></Box>       
       }>
       </List>
       */
-  }
+      }
     </Box>
   );
 }
